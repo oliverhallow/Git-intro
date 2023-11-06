@@ -29,4 +29,6 @@ fun convert(table, column):
 end
 
 convert(kWh-wealthy-consumer-data, "energi")
+
+convertion = transform-column(kWh-wealthy-consumer-data,"energi",energi-to-number)
   
