@@ -1,4 +1,3 @@
-use context essentials2021
 include shared-gdrive("dcic-2021", "1wyQZj_L0qqV9Ekgr9au6RX2iqt2Ga8Ep")
 
 include gdrive-sheets
@@ -9,7 +8,6 @@ kWh-wealthy-consumer-data =
     source: load-spreadsheet(ssid).sheet-by-name("kWh", true)
     sanitize energi using string-sanitizer 
   end 
-
 
 fun energi-to-number(str :: String) -> Number:
   cases(Option) string-to-number(str):
@@ -29,6 +27,21 @@ fun convert(table, column):
 end
 
 convert(kWh-wealthy-consumer-data, "energi")
-
+  
 convertion = transform-column(kWh-wealthy-consumer-data,"energi",energi-to-number)
+
+fun Car-daily(distance-travelled-daily, distance-per-fuel-unit, energy-per-unit-of-fuel):
+  energy-daily = (distance-travelled-daily / distance-per-fuel-unit ) * energy-per-unit-of-fuel
+  energy-daily
+end 
+
+distance-travelled-daily = 23
+distance-per-fuel-unit = 3
+energy-per-unit-of-fuel = 4
+
+sum-car = sum(convertion,"energi") + Car-daily(distance-travelled-daily, distance-per-fuel-unit, energy-per-unit-of-fuel)
+
+sum-car
+
+bar-chart(convertion,"komponent","energi")
   
